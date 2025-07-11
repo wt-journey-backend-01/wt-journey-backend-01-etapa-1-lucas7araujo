@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <title>Cardápio DevBurger</title>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <h1 class="navbar__titulo">
+            <i class="fas fa-hamburger"></i> DEVBURGER
+        </h1>
+        <ul class="navbar__menu">
+            <a class="navbar__titulo" style="text-decoration: none;" href="/contato">CONTATO</a>
+            <li class="navbar__item">
+                <a href="https://github.com/lucas7araujo" target="_blank" class="navbar__link">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+            <li class="navbar__item">
+                <a href="https://www.linkedin.com/in/lucasaraujo21/" target="_blank" class="navbar__link">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+            <li class="navbar__item">
+                <a href="https://instagram.com/aaraujo.dev" target="_blank" class="navbar__link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+
+        <h2 class="sugestao">CARDÁPIO - DEVBURGER</h2>
+
+        <div class="cardapio" id="cardapio">
+            <!-- <div class="cardapio__item">
+                <h2 class="cardapio__lanche">LANCHE</h2>
+                <p class="cardapio__ingredientes">INGREDIENTES</p>
+            </div>
+            <div class="cardapio__item">
+                <h2 class="cardapio__lanche">LANCHE</h2>
+                <p class="cardapio__ingredientes">INGREDIENTES</p>
+            </div>
+            <div class="cardapio__item">
+                <h2 class="cardapio__lanche">LANCHE</h2>
+                <p class="cardapio__ingredientes">INGREDIENTES</p>
+            </div> -->
+        </div>
+
+        <h2 class="sugestao">SUGESTÃO DE NOVOS LANCHES</h2>
+
+        <form action="/sugestao" method="get">
+            <label for="nome">Nome do Lanche:</label><br>
+            <input type="text" id="nome" name="nome" required><br><br>
+
+            <label for="ingredientes">Ingredientes</label><br>
+            <input type="text" id="ingredientes" name="ingredientes" required><br><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <img src="/images/lucas_perfil.jpeg" alt="Lucas Araújo" class="footer__foto" />
+
+            <div class="footer__texto">
+                <p><strong>Lucas Araújo</strong></p>
+                <p>Estudante do 2º período de Sistemas de Informação na PUC Betim.</p>
+                <p>Atualmente em busca de uma oportunidade de estágio para aplicar meus conhecimentos,
+                    contribuir com inovação e aprimorar minhas habilidades.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        fetch('/api/lanches')
+            .then(res => res.json())
+            .then(lanches => {
+                const container = document.getElementById('cardapio');
+                container.innerHTML = '';
+
+                lanches.forEach(lanche => {
+                    const item = document.createElement('div');
+                    item.classList.add('cardapio__item');
+
+                    item.innerHTML = `
+        <h2 class="cardapio__lanche">${lanche.nome}</h2>
+        <p class="cardapio__ingredientes">${lanche.ingredientes}</p>
+      `;
+
+                    container.appendChild(item);
+                });
+            })
+            .catch(err => console.error('Erro ao carregar lanches:', err));
+
+    </script>
+
+</body>
+
+</html>
